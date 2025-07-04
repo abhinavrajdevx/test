@@ -12,7 +12,7 @@ import random
 # Download historical data using requests
 def download_data():
     end_time = int(time.time() * 1000)
-    start_time = end_time - 10 * 24 * 60 * 60 * 1000  # 10 days in ms
+    start_time = end_time - 30 * 24 * 60 * 60 * 1000  # 10 days in ms
     
     url = "https://fapi.binance.com/fapi/v1/klines"
     all_data = []
@@ -171,7 +171,13 @@ NUM_PREDICTIONS = 5  # Number of random predictions to make
 # Main pipeline
 if __name__ == "__main__":
     print("Downloading data...")
-    df = download_data()
+    # df = download_data()
+    # df.to_csv('btc_5m_data.csv')
+
+    print("Loading data from CSV...")
+    df = pd.read_csv('btc_5m_data.csv', parse_dates=['timestamp'], index_col='timestamp')
+    print(f"Retrieved {len(df)} data points")
+
     print(f"Retrieved {len(df)} data points")
     
     print("Preprocessing data...")
